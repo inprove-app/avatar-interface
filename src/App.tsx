@@ -16,6 +16,7 @@ interface Message {
 }
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
+const WS_BASE_URL = process.env.REACT_APP_WS_URL || 'ws://localhost:8080';
 
 function App() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -280,7 +281,7 @@ function App() {
 
   // WebSocket connection
   useEffect(() => {
-    const websocket = new WebSocket(`ws://localhost:8080/ws/${userId}`);
+    const websocket = new WebSocket(`${WS_BASE_URL}/ws/${userId}`);
     
     websocket.onopen = () => {
       console.log('WebSocket connected');
