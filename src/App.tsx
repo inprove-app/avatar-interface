@@ -178,14 +178,21 @@ function App() {
             addMessage("🎵 Audio Message", 'audio', false, audioBlob);
 
           try {
-            await axios.post(`${API_BASE_URL}/agent-webhook/inprove`, {
+            const requestPayload: any = {
               type: 'audio',
               sender: userId,
               receiver: 'bot',
               audio: audioData,
               timestamp: new Date().toISOString(),
               messageId: `msg_${Date.now()}`
-            });
+            };
+            
+            // Only add response_type if not default
+            if (responseType !== 'default') {
+              requestPayload.response_type = responseType;
+            }
+            
+            await axios.post(`${API_BASE_URL}/agent-webhook/inprove`, requestPayload);
 
             // Messages are now handled via WebSocket in real-time
             setIsLoading(false);
