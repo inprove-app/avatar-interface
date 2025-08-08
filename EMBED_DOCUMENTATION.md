@@ -2,7 +2,7 @@
 
 ## 📋 Overview
 
-The chat component can be embedded in other websites using an iframe. The embed page is located at `/embed` and accepts configuration parameters via URL.
+The chat component can be embedded in other websites using an iframe. The embed page is located at `/embed` and accepts configuration parameters via URL. The component is now integrated directly into the main project for better deployment compatibility.
 
 ## 🚀 Basic Usage
 

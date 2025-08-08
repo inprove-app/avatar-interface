@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChatComponent } from '@inprove/chat-component';
+import { ChatComponent } from './ChatComponent';
 import './EmbedPage.css';
 
 const EmbedPage: React.FC = () => {

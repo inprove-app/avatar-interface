@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChatComponent } from '@inprove/chat-component';
+import { ChatComponent } from './ChatComponent';
 
 const SimpleTest: React.FC = () => {
   const handleNewMessage = (message: any) => {

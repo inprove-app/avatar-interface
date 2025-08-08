@@ -68,7 +68,7 @@ export const ChatComponent: React.FC<ChatComponentProps> = ({
     return urlParams.get('userId') || 'web_user_' + Math.random().toString(36).substr(2, 9);
   };
 
-  const [userId, setUserId] = useState(getUserId());
+  const [userId] = useState(getUserId());
 
   // Domain validation
   const validateDomain = useCallback(() => {

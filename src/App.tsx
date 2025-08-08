@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import TestEmbeddedChat from './TestEmbeddedChat';
 import SimpleTest from './SimpleTest';
-import { ChatComponent, Message as ChatMessage } from '@inprove/chat-component';
+import { ChatComponent } from './ChatComponent';
+import { Message as ChatMessage } from './types';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
 

@@ -17,6 +17,7 @@ root.render(
         <Route path="/embed" element={<EmbedPage />} />
         <Route path="/test" element={<App />} />
         <Route path="/test-embedded" element={<App />} />
+        <Route path="/test-embed" element={<App />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

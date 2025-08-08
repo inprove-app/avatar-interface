@@ -1,5 +1,6 @@
 import React from 'react';
-import { ChatComponent, Message } from '@inprove/chat-component';
+import { ChatComponent } from './ChatComponent';
+import { Message } from './types';
 
 const TestEmbeddedChat: React.FC = () => {
   const handleNewMessage = (message: Message) => {
