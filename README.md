@@ -1,101 +1,258 @@
 # Inprove Web Interface
 
-A React-based web interface for communicating with the Inprove AI bot. This interface allows users to send text and audio messages to the bot and receive responses in real-time.
+A React-based web interface for the Inprove AI system, featuring real-time chat, avatar interactions, and an embeddable chat component.
 
-## Features
+## 🚀 Features
 
-- **Simple messaging**: Send text messages to the AI bot
-- **Audio recording**: Record and send audio messages
-- **Local message history**: View conversation history stored locally
-- **Real-time responses**: Receive immediate responses from the bot
-- **Responsive design**: Works on desktop and mobile devices
+### Main Interface
+- **Real-time chat** with AI avatar
+- **Audio recording** and transcription
+- **Video responses** with avatar animation
+- **Camera integration** for user video
+- **Message history** and persistence
+- **Response type selection** (text, audio, video)
+- **User ID persistence** via URL parameters
 
-## Getting Started
+### Embedded Chat Component
+- **Lightweight** text-only chat component
+- **Easy integration** into any React app
+- **Security features** (domain validation, API key auth)
+- **Customizable** themes and styling
+- **TypeScript support** with full type definitions
 
-### Prerequisites
+## 📦 Installation
 
-- Node.js (version 14 or higher)
-- npm or yarn
-- The Inprove backend server running on port 8080
-
-### Installation
-
-1. Install dependencies:
 ```bash
+# Clone the repository
+git clone https://github.com/inprove-app/avatar-interface.git
+cd avatar-interface
+
+# Install dependencies
 npm install
-```
 
-2. Set up environment variables:
-Create a `.env` file in the root directory:
-```
-REACT_APP_API_URL=http://localhost:8080
-```
-
-3. Start the development server:
-```bash
+# Start development server
 npm start
 ```
 
-The app will open in your browser at `http://localhost:3000`.
+## 🎯 Usage
 
-### Building for Production
+### Main Interface
+The main interface provides a full-featured chat experience with avatar interactions:
+
+```tsx
+// Access via URL parameters
+http://localhost:3000?userId=my-user-id
+```
+
+### Embedded Component
+Use the embedded component in your own applications:
+
+```tsx
+import { ChatComponent } from './inprove-chat-component';
+
+function App() {
+  return (
+    <ChatComponent
+      apiUrl="https://api.inproveapp.com"
+      apiKey="your-api-key"
+      userId="user123"
+      theme="light"
+      height="400px"
+      width="100%"
+      onMessage={(message) => console.log('New message:', message)}
+      onError={(error) => console.error('Error:', error)}
+    />
+  );
+}
+```
+
+## 🏗️ Project Structure
+
+```
+inprove-web-interface/
+├── src/
+│   ├── App.tsx                    # Main application
+│   ├── TestEmbeddedChat.tsx       # Embedded component testing
+│   ├── SimpleTest.tsx             # Basic component testing
+│   └── App.css                    # Main styles
+├── inprove-chat-component/        # Embedded chat component
+│   ├── src/
+│   │   ├── ChatComponent.tsx      # Main component
+│   │   ├── ChatComponent.css      # Component styles
+│   │   ├── types.ts               # TypeScript interfaces
+│   │   └── index.ts               # Exports
+│   ├── dist/                      # Built files
+│   ├── package.json               # Component package
+│   ├── tsconfig.json              # TypeScript config
+│   └── README.md                  # Component documentation
+├── public/                        # Static assets
+├── package.json                   # Main app package
+└── README.md                      # This file
+```
+
+## 🔧 Development
+
+### Main Interface Development
 
 ```bash
+# Start development server
+npm start
+
+# Build for production
 npm run build
+
+# Test the application
+npm test
 ```
 
-## Usage
+### Embedded Component Development
 
-1. **Send text messages**: 
-   - Toggle the "Text" checkbox to enable text mode
-   - Type your message in the input field
-   - Press Enter or click "Send"
-2. **Send audio messages**:
-   - Click "Start Recording" to begin recording
-   - Speak your message
-   - Click "Stop Recording" to send the audio
-3. **View messages**: All messages appear in the chat area with timestamps
-4. **Monitor status**: Check the API status and message count at the bottom of the page
+```bash
+# Navigate to component directory
+cd inprove-chat-component
 
-## API Endpoints
+# Install dependencies
+npm install
 
-The interface communicates with the following backend endpoint:
+# Build the component
+npm run build
 
-- `POST /api/v1/agent-webhook/inprove` - Send messages to the bot and receive responses
+# Reinstall in main app
+cd ..
+npm uninstall @inprove/chat-component
+npm install ./inprove-chat-component --legacy-peer-deps
 
-## Development
-
-### Project Structure
-
-```
-src/
-├── App.tsx          # Main application component
-├── App.css          # Application styles
-├── index.tsx        # Application entry point
-└── ...
+# Clear cache and restart
+npm cache clean --force
+rm -rf node_modules/.cache
+npm start -- --reset-cache
 ```
 
-### Key Components
+## 🧪 Testing
 
-- **App.tsx**: Main component handling the interface layout and functionality
-- **Message Interface**: Defines the structure of chat messages
-- **Connection Status**: Manages connection state with the bot
+### Test Pages
+The application includes test pages for the embedded component:
 
-### Styling
+1. **Simple Test** (`/simple-test`)
+   - Basic functionality testing
+   - Single component instance
+   - Quick verification
 
-The interface uses CSS modules and follows a modern design with:
-- Purple gradient header
-- White cards with rounded corners
-- Responsive layout
-- Smooth animations and transitions
+2. **Full Test** (`/full-test`)
+   - Multiple component instances
+   - Different themes and styles
+   - Comprehensive testing
 
-## Troubleshooting
+### Testing Checklist
+- [ ] Main interface loads correctly
+- [ ] Audio recording works
+- [ ] Video responses display
+- [ ] Camera integration functions
+- [ ] Embedded component loads
+- [ ] WebSocket connections work
+- [ ] Message sending/receiving
+- [ ] Error handling
+- [ ] Domain validation
+- [ ] API key authentication
 
-- **Connection issues**: Ensure the backend server is running on the correct port
-- **Audio recording**: Make sure your browser has permission to access the microphone
-- **Messages not appearing**: Check the browser console for API errors
+## 🔒 Security
 
-## Contributing
+### Domain Validation
+The embedded component only works on authorized domains:
+- `inproveapp.com`
+- `yourcompany.com`
+- `localhost` (development)
+- `127.0.0.1` (development)
+
+### API Key Authentication
+All API requests require valid API keys:
+```
+Authorization: Bearer your-api-key
+```
+
+## 🌐 Backend Requirements
+
+### Required Endpoints
+
+1. **GET /messages/{user_id}**
+   - Returns message history
+   - Requires API key authentication
+
+2. **POST /agent-webhook/inprove**
+   - Processes new messages
+   - Requires API key authentication
+
+3. **WebSocket /ws/{user_id}**
+   - Real-time message delivery
+   - No authentication required (for now)
+
+### Environment Variables
+
+```env
+REACT_APP_API_URL=http://localhost:8080
+REACT_APP_WS_URL=ws://localhost:8080
+```
+
+## 🚀 Deployment
+
+### AWS Amplify
+The project is configured for AWS Amplify deployment:
+
+```bash
+# Build specification
+amplify.yml
+
+# Environment variables
+REACT_APP_API_URL=https://api.inproveapp.com
+REACT_APP_WS_URL=wss://api.inproveapp.com
+```
+
+### Manual Deployment
+```bash
+# Build the application
+npm run build
+
+# Deploy to your hosting service
+# (e.g., AWS S3, Netlify, Vercel)
+```
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+1. **Component Not Loading**
+   - Clear browser cache
+   - Check console for errors
+   - Verify API endpoints
+
+2. **WebSocket Connection Failed**
+   - Check WebSocket URL format
+   - Verify backend is running
+   - Check CORS configuration
+
+3. **API Key Errors**
+   - Verify API key is valid
+   - Check backend authentication
+   - Ensure domain is authorized
+
+4. **Build Errors**
+   - Clear npm cache
+   - Remove node_modules
+   - Reinstall dependencies
+
+### Debug Mode
+Enable debug logging in browser console:
+- WebSocket connection status
+- API request/response logs
+- Error messages and stack traces
+
+## 📚 Documentation
+
+- **Main Interface**: See `src/App.tsx` for implementation details
+- **Embedded Component**: See `inprove-chat-component/README.md` for complete documentation
+- **Backend Integration**: See backend repository for API documentation
+
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -103,6 +260,14 @@ The interface uses CSS modules and follows a modern design with:
 4. Test thoroughly
 5. Submit a pull request
 
-## License
+## 📞 Support
 
-This project is part of the Inprove system.
+For issues and questions:
+- Check this documentation
+- Review the troubleshooting section
+- Open an issue on GitHub
+- Contact the development team
+
+## 📄 License
+
+MIT License - see LICENSE file for details.
