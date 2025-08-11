@@ -2,14 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import ChatPage from './ChatPage';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+// Check if we should render the embedded chat page
+const urlParams = new URLSearchParams(window.location.search);
+const isEmbeddedChat = urlParams.get('embedded') === 'true' || window.location.pathname.includes('chat');
+
 root.render(
   <React.StrictMode>
-    <App />
+    {isEmbeddedChat ? <ChatPage /> : <App />}
   </React.StrictMode>
 );
 
